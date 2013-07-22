@@ -38,7 +38,17 @@
 									$.blockUI({ message: '<h1><img src="images/ajax-loader.gif" /> Updating...</h1>' }); 
 									setTimeout($.unblockUI, 2000);
 								}
-							})
+							}).done(function( response ) {
+								$('#div-ac1-dd').html(response);
+									$.ajax({
+									type: "POST",
+									url: "trip-display-activities.php",
+									cache: false,
+									data: { edittripid: edittripid, chkbox1: chkbox1, chkbox2: chkbox2, chkbox3: chkbox3, chkbox4: chkbox4, chkbox5: chkbox5,  chkbox6: chkbox6,  chkbox7: chkbox7, chkbox8: chkbox8,  chkbox9: chkbox9,  chkbox10: chkbox10 },
+									}).done(function( response ) {
+									$('#response-display').html(response);
+									});
+								});
 				});
 });				
 	</script>
@@ -72,14 +82,13 @@ $gettripid = 1;
 		<?php echo $r['activitytype']; ?>
 		</label>
 		<?php $boom = "ac" . $i;?>
-		<input type='checkbox' id='chkbox<?php echo $r['activityid']; ?>' name='chkbox<?php echo $r['activityid']; ?>' value='<?php echo $r['activityid']?>' <?php if ($row1[0][$boom] == 1) {echo "checked";} else {echo $row1[0][$boom];} ?> >
+		<input type='checkbox' id='chkbox<?php echo $r['activityid']; ?>' name='chkbox<?php echo $r['activityid']; ?>' value='<?php echo $r['activityid']?>' <?php if ($row1[0][$boom] == 1) {echo "checked";} else {echo $row1[0][$boom];} ?> ><br />
 	<?php
 		$i++;
 		};
 	?>
 		<input type="button" id="button" value="Update" />
 		</div>
-	<?php
-
-	?>
+		<div id="response-display">
+		</div>
 </body>
